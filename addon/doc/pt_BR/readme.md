@@ -1,8 +1,8 @@
-# SIRA – Sistema Interno de Ramais e Anotações
+# SIRA - Sistema Interno de Ramais e Anotações
 
 * **Autor:** Edilberto Fonseca <edilberto.fonseca@outlook.com>  
 * **Licença:** [GPL 2](https://www.gnu.org/licenses/gpl-2.0.html)  
-* **Versão:** 2025.2.0  
+* **Versão:** 2025.1.0  
 
 ---
 

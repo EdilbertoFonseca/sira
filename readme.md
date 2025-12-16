@@ -2,7 +2,7 @@
 
 * **Author:** Edilberto Fonseca <edilberto.fonseca@outlook.com>  
 * **License:** [GPL 2](https://www.gnu.org/licenses/gpl-2.0.html)  
-* **Version:** 2025.1.0  
+* **Version:** 2025.2.0  
 
 ## Description
 

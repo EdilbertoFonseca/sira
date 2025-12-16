@@ -29,6 +29,8 @@ addonPath = os.path.dirname(__file__)
 ADDON_NAME = addonHandler.getCodeAddon().manifest["name"]
 ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 ADDON_DESCRIPTION = addonHandler.getCodeAddon().manifest["description"]
+ADDON_VERSION = addonHandler.getCodeAddon().manifest["version"]
+
 
 def getOurAddon():
 	"""

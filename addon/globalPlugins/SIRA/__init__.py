@@ -27,146 +27,229 @@ from .main import SIRA
 from .medicalDischarge import MedicalDischarge
 from .messageForTransport import MessageForTransport
 from .model import Section
-from .varsConfig import ADDON_NAME, ADDON_SUMMARY
-
-# Start the initDB function.
-Section.initDB()
+from .updateManager import UpdateManager
+from .varsConfig import ADDON_NAME, ADDON_SUMMARY, ADDON_VERSION
 
 # Initialize translation support
 addonHandler.initTranslation()
 
+GITHUB_REPO = "EdilbertoFonseca/sira"
+
+
+# =========================
+# Secure mode decorator
+# =========================
+
 def disableInSecureMode(decoratedCls):
-	"""
-	Decorator to disable the plugin in secure mode.
-	"""
 	if globalVars.appArgs.secure:
 		return globalPluginHandler.GlobalPlugin
 	return decoratedCls
 
 
+# =========================
+# Global Plugin
+# =========================
+
 @disableInSecureMode
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
-	# Creating the constructor of the newly created GlobalPlugin class.
 	def __init__(self):
-		super(GlobalPlugin, self).__init__()
-		self.create_menu()
+		super().__init__()
+		log.info(f"{ADDON_NAME} {ADDON_VERSION} initializing")
 
-	def create_menu(self):
-		gui.settingsDialogs.NVDASettingsDialog.categoryClasses.append(SIRASystemSettingsPanel)
-		self.mainMenu = wx.Menu()
+		# Inicialização tardia (evita efeitos colaterais no import)
+		try:
+			Section.initDB()
+		except Exception as e:
+			log.error(f"Database initialization failed: {e}", excinfo=True)
+
+		self.updateManager = UpdateManager(
+			reponame=GITHUB_REPO,
+			currentversion=ADDON_VERSION,
+			addonnameforfile=ADDON_NAME
+		)
+
+		self._registerSettingsPanel()
+		self._createMenu()
+
+	# =========================
+	# Settings panel
+	# =========================
+
+	def _registerSettingsPanel(self):
+		classes = gui.settingsDialogs.NVDASettingsDialog.categoryClasses
+		if SIRASystemSettingsPanel not in classes:
+			classes.append(SIRASystemSettingsPanel)
+
+	# =========================
+	# Menu creation
+	# =========================
+
+	def _createMenu(self):
 		self.toolsMenu = gui.mainFrame.sysTrayIcon.toolsMenu
+		self.mainMenu = wx.Menu()
 
-		# Creation of menu items.
-		self.registeredExtensions = self.mainMenu.Append(-1, _("&Lists Of Registered Extensions..."))
-		self.messageForTransport= self.mainMenu.Append(-1, _("&Message for transport..."))
-		self.medicalDischarge = self.mainMenu.Append(-1, _("Medical discharge &register..."))
-		self.generalMessage= self.mainMenu.Append(-1, _("&General message..."))
-		self.settingsPanel = self.mainMenu.Append(-1, _("&Settings..."))
-		self.help = self.mainMenu.Append(-1, _('&Help'))
+		self.menuList = self.mainMenu.Append(
+			wx.ID_ANY,
+			_("&Lists of registered extensions...")
+		)
+		self.menuTransport = self.mainMenu.Append(
+			wx.ID_ANY,
+			_("Message for &transport...")
+		)
+		self.menuMedical = self.mainMenu.Append(
+			wx.ID_ANY,
+			_("Medical discharge &register...")
+		)
+		self.menuGeneral = self.mainMenu.Append(
+			wx.ID_ANY,
+			_("&General message...")
+		)
 
-    # Binding Events
-		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.script_activateListOfRegisteredExtensions, self.registeredExtensions)
-		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.script_activateMessageForTransport, self.messageForTransport)
-		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.script_activateMedicalDischarge, self.medicalDischarge)
-		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.script_activateGeneralMessage, self.generalMessage)
-		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.script_openAddonSettingsDialog, self.settingsPanel)
-		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.script_onHelp, self.help)
+		self.mainMenu.AppendSeparator()
 
-		self.toolsMenu.AppendSubMenu(self.mainMenu, "&{}...".format(ADDON_SUMMARY))
+		self.menuUpdate = self.mainMenu.Append(
+			wx.ID_ANY,
+			_("Check for &updates...")
+		)
+		self.menuSettings = self.mainMenu.Append(
+			wx.ID_ANY,
+			_("&Settings...")
+		)
+		self.menuHelp = self.mainMenu.Append(
+			wx.ID_ANY,
+			_("&Help")
+		)
 
-	def onSIRA(self, event):
-		# Translators: Title of contact list dialog box.
-		self.dlg = SIRA(gui.mainFrame, _("Lists Of Registered Extensions."))
+		# Bindings (handlers dedicados, não scripts)
+		icon = gui.mainFrame.sysTrayIcon
+		icon.Bind(wx.EVT_MENU, self._onList, self.menuList)
+		icon.Bind(wx.EVT_MENU, self._onTransport, self.menuTransport)
+		icon.Bind(wx.EVT_MENU, self._onMedical, self.menuMedical)
+		icon.Bind(wx.EVT_MENU, self._onGeneral, self.menuGeneral)
+		icon.Bind(wx.EVT_MENU, self._onCheckUpdates, self.menuUpdate)
+		icon.Bind(wx.EVT_MENU, self._onOpenSettings, self.menuSettings)
+		icon.Bind(wx.EVT_MENU, self._onHelp, self.menuHelp)
+
+		self.toolsMenu.AppendSubMenu(
+			self.mainMenu,
+			"&{}...".format(ADDON_SUMMARY)
+		)
+
+	# =========================
+	# Menu handlers (GUI thread)
+	# =========================
+
+	def _popup(self, dlg):
 		gui.mainFrame.prePopup()
-		self.dlg.CentreOnScreen()
-		self.dlg.Show()
+		dlg.CentreOnScreen()
+		dlg.ShowModal()
 		gui.mainFrame.postPopup()
 
-	def onMessageForTransport(self, event):
-		# Translators: Addon's main window dialog
-		self.dlg = MessageForTransport(gui.mainFrame, _(
-			"Message for transport."))
-		gui.mainFrame.prePopup()
-		self.dlg.CentreOnScreen()
-		self.dlg.Show()
-		gui.mainFrame.postPopup()
-
-	def onMedicalDischarge(self, event):
-		# Translators: Addon's main window dialog
-		self.dlg = MedicalDischarge(gui.mainFrame,
-		_("Medical discharge register"))
-		gui.mainFrame.prePopup()
-		self.dlg.CentreOnScreen()
-		self.dlg.Show()
-		gui.mainFrame.postPopup()
-
-	def onGeneralMessage(self, event):
-		# Translators: Addon's main window dialog
-		self.dlg = GeneralMessage(gui.mainFrame,
-		_("General Message"))
-		gui.mainFrame.prePopup()
-		self.dlg.CentreOnScreen()
-		self.dlg.Show()
-		gui.mainFrame.postPopup()
-
-	# defining a script with decorator:
-	@script(
-		gesture="kb:Alt+numpad1",
-		# Translators: Text displayed in NVDA help.
-		description=_("%s - Displays a window with all contacts registered in the Extension Registration System.") % ADDON_NAME,
-		category=ADDON_SUMMARY
-	)
-	def script_activateListOfRegisteredExtensions(self, gesture):
-		wx.CallAfter(self.onSIRA, None)
-
-	# defining a script with decorator:
-	@script(
-		gesture="kb:Alt+numpad2",
-		# Translators: Text displayed in NVDA help.
-		description=_("%s - Message logging for the Transportation Department.") % ADDON_NAME,
-		category=ADDON_SUMMARY
-	)
-	def script_activateMessageForTransport(self, gesture):
-			wx.CallAfter(self.onMessageForTransport, None)
-
-	# defining a script with decorator:
-	@script(
-		gesture="kb:Alt+numpad3",
-		# Translators: Text displayed in NVDA help.
-		description=_("%s - Hospital Discharge Registration.") % ADDON_NAME,
-		category=ADDON_SUMMARY
-	)
-	def script_activateMedicalDischarge(self, gesture):
-			wx.CallAfter(self.onMedicalDischarge, None)
-
-	# defining a script with decorator:
-	@script(
-		gesture="kb:Alt+numpad4",
-		# Translators: Text displayed in NVDA help.
-		description=_("%s - Allows the registration of messages for all departments.") % ADDON_NAME,
-		category=ADDON_SUMMARY
-	)
-	def script_activateGeneralMessage(self, gesture):
-			wx.CallAfter(self.onGeneralMessage, None)
-
-	def script_openAddonSettingsDialog(self, gesture):
+	def _onList(self, event):
 		wx.CallAfter(
-			getattr(gui.mainFrame, "popupSettingsDialog", gui.mainFrame._popupSettingsDialog),
+			self._popup,
+			SIRA(gui.mainFrame, _("Lists of registered extensions"))
+		)
+
+	def _onTransport(self, event):
+		wx.CallAfter(
+			self._popup,
+			MessageForTransport(gui.mainFrame, _("Message for transport"))
+		)
+
+	def _onMedical(self, event):
+		wx.CallAfter(
+			self._popup,
+			MedicalDischarge(gui.mainFrame, _("Medical discharge register"))
+		)
+
+	def _onGeneral(self, event):
+		wx.CallAfter(
+			self._popup,
+			GeneralMessage(gui.mainFrame, _("General message"))
+		)
+
+	def _onCheckUpdates(self, event):
+		self.updateManager.checkforupdates(silent=False)
+
+	def _onOpenSettings(self, event):
+		wx.CallAfter(
+			getattr(
+				gui.mainFrame,
+				"popupSettingsDialog",
+				gui.mainFrame._popupSettingsDialog
+			),
 			gui.settingsDialogs.NVDASettingsDialog,
 			SIRASystemSettingsPanel
 		)
 
-	def script_onHelp(self, gesture):
-		"""Open the addon's help page"""
-		wx.LaunchDefaultBrowser(addonHandler.Addon(os.path.join(
-			os.path.dirname(__file__), "..", "..")).getDocFilePath())
+	def _onHelp(self, event):
+		wx.LaunchDefaultBrowser(
+			addonHandler.Addon(
+				os.path.join(os.path.dirname(__file__), "..", "..")
+			).getDocFilePath()
+		)
+
+	# =========================
+	# NVDA scripts (keyboard)
+	# =========================
+
+	@script(
+		gesture="kb:Alt+numpad1",
+		description=_(
+			"{addon} - Opens the list of registered extensions."
+		).format(addon=ADDON_NAME),
+		category=ADDON_SUMMARY
+	)
+	def script_openList(self, gesture):
+		self._onList(None)
+
+	@script(
+		gesture="kb:Alt+numpad2",
+		description=_(
+			"{addon} - Opens the message for transport dialog."
+		).format(addon=ADDON_NAME),
+		category=ADDON_SUMMARY
+	)
+	def script_openTransport(self, gesture):
+		self._onTransport(None)
+
+	@script(
+		gesture="kb:Alt+numpad3",
+		description=_(
+			"{addon} - Opens the medical discharge register."
+		).format(addon=ADDON_NAME),
+		category=ADDON_SUMMARY
+	)
+	def script_openMedical(self, gesture):
+		self._onMedical(None)
+
+	@script(
+		gesture="kb:Alt+numpad4",
+		description=_(
+			"{addon} - Opens the general message dialog."
+		).format(addon=ADDON_NAME),
+		category=ADDON_SUMMARY
+	)
+	def script_openGeneral(self, gesture):
+		self._onGeneral(None)
+
+	# =========================
+	# Cleanup
+	# =========================
 
 	def terminate(self):
-		super(GlobalPlugin, self).terminate()
-		gui.settingsDialogs.NVDASettingsDialog.categoryClasses.remove(
-			SIRASystemSettingsPanel)
+		super().terminate()
+
+		try:
+			gui.settingsDialogs.NVDASettingsDialog.categoryClasses.remove(
+				SIRASystemSettingsPanel
+			)
+		except ValueError:
+			pass
+
 		try:
 			self.toolsMenu.Remove(self.mainMenu)
 		except Exception as e:
-			log.warning(f"Error removing Scraps and agenda organizer menu item: {e}")
+			log.warning(f"Failed to remove menu: {e}")

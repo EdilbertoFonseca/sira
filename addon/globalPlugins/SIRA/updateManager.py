@@ -202,7 +202,7 @@ class UpdateManager:
 				)
 			)
 
-			addonHandler.installAddon(addonpath)
+			os.startfile(addonpath)
 
 			# Não removemos o arquivo imediatamente.
 			# O NVDA pode ainda precisar dele durante a instalação.
@@ -215,10 +215,7 @@ class UpdateManager:
 			)
 
 		except Exception as e:
-			log.error(
-				f"Unexpected error during download/install: {e}",
-				excinfo=True
-			)
+			log.error(f"Unexpected error during download/install: {e}")
 			wx.CallAfter(
 				ui.message,
 				_("An unexpected error occurred while installing the update.")

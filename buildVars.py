@@ -28,14 +28,13 @@ addon_info = AddonInfo(
 	addon_version="2025.2.0",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
-	addon_changelog=_("""Changelog for the add-on version.
-It can span multiple lines."""),
+	addon_changelog=_("""Fix updater installation and NVDA logger compatibility."""),
 	# Author(s)
 	addon_author="Edilberto Fonseca <edilberto.fonseca@outlook.com>",
 	# URL for the add-on documentation support
-	addon_url=None,
+	addon_url="http://github.com/edilberto/sira",
 	# URL for the add-on repository where the source code can be found
-	addon_sourceURL=None,
+	addon_sourceURL="http://github.com/edilberto/sira",
 	# Documentation file name
 	addon_docFileName="readme.html",
 	# Minimum NVDA version supported (e.g. "2019.3.0", minor version is optional)

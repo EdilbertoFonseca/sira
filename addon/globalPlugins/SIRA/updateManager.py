@@ -89,7 +89,7 @@ class UpdateManager:
 				if not silent:
 					wx.CallAfter(
 						ui.message,
-						_("You are already running the latest version.")
+						_("You are already running the latest version of SIRA.")
 					)
 				return
 

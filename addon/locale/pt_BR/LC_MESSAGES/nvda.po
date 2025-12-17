@@ -6,10 +6,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 'SIRA' '2025.2.0'\n"
+"Project-Id-Version: 'SIRA' '2025.2.1'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2025-12-16 10:12-0300\n"
-"PO-Revision-Date: 2025-12-16 10:24-0300\n"
+"POT-Creation-Date: 2025-12-17 13:58-0300\n"
+"PO-Revision-Date: 2025-12-17 14:52-0300\n"
 "Last-Translator: Edilberto Fonseca <edilberto.fonseca@outlook.com>\n"
 "Language-Team: Edilberto Fonseca <edilberto.fonseca@outlook.com>\n"
 "Language: pt_BR\n"
@@ -45,65 +45,69 @@ msgstr "Erro ao renomear arquivo: {e}"
 msgid "Attention"
 msgstr "Atenção"
 
-#: addon\globalPlugins\sira\__init__.py:94
+#: addon\globalPlugins\sira\__init__.py:92
 msgid "&Lists of registered extensions..."
 msgstr "&Listas de ramais registrados..."
 
-#: addon\globalPlugins\sira\__init__.py:98
+#: addon\globalPlugins\sira\__init__.py:96
 msgid "Message for &transport..."
 msgstr "Mensagem para o &transporte..."
 
-#: addon\globalPlugins\sira\__init__.py:102
+#: addon\globalPlugins\sira\__init__.py:100
 msgid "Medical discharge &register..."
 msgstr "&Registro de alta médica..."
 
-#: addon\globalPlugins\sira\__init__.py:106
+#: addon\globalPlugins\sira\__init__.py:104
 msgid "&General message..."
 msgstr "Mensagem &geral..."
 
-#: addon\globalPlugins\sira\__init__.py:113
+#: addon\globalPlugins\sira\__init__.py:111
 msgid "Check for &updates..."
 msgstr "&Verificar atualizações..."
 
-#: addon\globalPlugins\sira\__init__.py:117
+#: addon\globalPlugins\sira\__init__.py:115
 msgid "&Settings..."
 msgstr "&Configurações..."
 
-#: addon\globalPlugins\sira\__init__.py:121
+#: addon\globalPlugins\sira\__init__.py:119
 msgid "&Help"
 msgstr "&Ajuda"
 
-#: addon\globalPlugins\sira\__init__.py:152
+#: addon\globalPlugins\sira\__init__.py:150
 msgid "Lists of registered extensions"
 msgstr "Listas de ramais registrados"
 
-#: addon\globalPlugins\sira\__init__.py:158
+#: addon\globalPlugins\sira\__init__.py:156
 msgid "Message for transport"
 msgstr "Mensagem para o transporte"
 
-#: addon\globalPlugins\sira\__init__.py:164
+#: addon\globalPlugins\sira\__init__.py:162
 msgid "Medical discharge register"
 msgstr "Registro de alta médica"
 
-#: addon\globalPlugins\sira\__init__.py:170
+#: addon\globalPlugins\sira\__init__.py:168
 msgid "General message"
 msgstr "Mensagem geral"
 
-#: addon\globalPlugins\sira\__init__.py:201
+#: addon\globalPlugins\sira\__init__.py:199
 msgid "{addon} - Opens the list of registered extensions."
 msgstr "{addon} - Abre a lista de extensões registradas."
 
-#: addon\globalPlugins\sira\__init__.py:211
+#: addon\globalPlugins\sira\__init__.py:209
 msgid "{addon} - Opens the message for transport dialog."
 msgstr "{addon} - Abre a mensagem para caixa de diálogo de transporte."
 
-#: addon\globalPlugins\sira\__init__.py:221
+#: addon\globalPlugins\sira\__init__.py:219
 msgid "{addon} - Opens the medical discharge register."
 msgstr "{addon} - Abre o registro de alta médica."
 
-#: addon\globalPlugins\sira\__init__.py:231
+#: addon\globalPlugins\sira\__init__.py:229
 msgid "{addon} - Opens the general message dialog."
 msgstr "{addon} - Abre a caixa de diálogo de mensagens gerais."
+
+#: addon\globalPlugins\sira\__init__.py:239
+msgid "{addon} - Check for updates."
+msgstr "{addon} - Verificar atualizações."
 
 #: addon\globalPlugins\sira\addEditRecord.py:36
 msgid "Mandatory Library Absent: Masked"
@@ -650,8 +654,8 @@ msgid "The Name, Subject, patient and city Fields cannot be null!"
 msgstr "Os campos nome, assunto, paciente e cidade não podem ser nulos!"
 
 #: addon\globalPlugins\sira\updateManager.py:92
-msgid "You are already running the latest version."
-msgstr "Você já está executando a versão mais recente."
+msgid "You are already running the latest version of SIRA."
+msgstr "Você já está executando a última versão do SIRA."
 
 #: addon\globalPlugins\sira\updateManager.py:96
 msgid "No release notes provided."
@@ -703,7 +707,7 @@ msgstr "Instalando atualização para {addon}..."
 msgid "Failed to download the update due to a network error."
 msgstr "Falha ao baixar a atualização devido a um erro de rede."
 
-#: addon\globalPlugins\sira\updateManager.py:224
+#: addon\globalPlugins\sira\updateManager.py:221
 msgid "An unexpected error occurred while installing the update."
 msgstr "Ocorreu um erro inesperado durante a instalação da atualização."
 
@@ -729,12 +733,16 @@ msgstr ""
 #. Brief changelog for this version
 #. Translators: what's new content for the add-on version to be shown in the add-on store
 #: buildVars.py:31
-msgid ""
-"Changelog for the add-on version.\n"
-"It can span multiple lines."
+msgid "Fix updater installation and NVDA logger compatibility."
 msgstr ""
-"Log de alterações da versão complementar.\\n\n"
-"Pode abranger várias linhas."
+"Corrigir a instalação do atualizador e a compatibilidade do registrador NVDA."
+
+#~ msgid ""
+#~ "Changelog for the add-on version.\n"
+#~ "It can span multiple lines."
+#~ msgstr ""
+#~ "Log de alterações da versão complementar.\\n\n"
+#~ "Pode abranger várias linhas."
 
 #, python-format
 #~ msgid ""

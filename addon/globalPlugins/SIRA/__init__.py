@@ -33,8 +33,7 @@ from .varsConfig import ADDON_NAME, ADDON_SUMMARY, ADDON_VERSION
 # Initialize translation support
 addonHandler.initTranslation()
 
-GITHUB_REPO = "EdilbertoFonseca/sira"
-
+GITHUB_REPO = f"EdilbertoFonseca/{ADDON_NAME}"
 
 # =========================
 # Secure mode decorator
@@ -44,7 +43,6 @@ def disableInSecureMode(decoratedCls):
 	if globalVars.appArgs.secure:
 		return globalPluginHandler.GlobalPlugin
 	return decoratedCls
-
 
 # =========================
 # Global Plugin
@@ -234,6 +232,16 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	)
 	def script_openGeneral(self, gesture):
 		self._onGeneral(None)
+
+	@script(
+		gesture="kb:Alt+numpad5",
+		description=_(
+				"{addon} - Check for updates."
+		).format(addon=ADDON_NAME),
+		category=ADDON_SUMMARY
+	)
+	def script_update(self, gesture):
+		self._onCheckUpdates(None)
 
 	# =========================
 	# Cleanup

@@ -23,7 +23,7 @@ from gui import guiHelper
 
 from . import controller as core
 from .addEditRecord import AddEditRecDialog
-from .varsConfig import ADDON_SUMMARY, ourAddon
+from .varsConfig import ADDON_SUMMARY, ADDON_NAME
 from .manageDuplicatesDialog import ManageDuplicatesDialog
 
 # Initializes the translation
@@ -350,9 +350,12 @@ class SIRA(wx.Dialog):
 		"""
 		Apply configurations specific to the add-on
 		"""
-		if config.conf[ourAddon.name]["resetRecords"] is False:
+		conf = config.conf.get(ADDON_NAME, {})
+
+		if not conf.get("resetRecords", True):
 			self.buttonResetRecords.Disable()
-		if (config.conf[ourAddon.name]["importCSV"] is False) or (config.conf[ourAddon.name]["exportCSV"] is False):
+
+		if not conf.get("importCSV", True) or not conf.get("exportCSV", True):
 			self.buttonExport.Disable()
 			self.buttonImport.Disable()
 

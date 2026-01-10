@@ -1,3 +1,5 @@
-Add update check script and update translations
+- Moves database configuration logic to a new dbConfig.py module and refactors usage across the add-on for safer access.
 
-Introduced a new script (Alt+Numpad5) to check for updates in SIRA and updated the update message for clarity. Updated the Portuguese (pt_BR) translation file to reflect these changes and incremented the version metadata.
+-Updates the settings panel to support new options and improves configuration initialization.
+
+- Adds Markdown table support in buildVars.py and improves uninstall logic to optionally clear configuration.

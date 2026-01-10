@@ -14,14 +14,29 @@ Created on: 08/01/2025.
 import os
 import sys
 
+import globalVars
 import versionInfo
 from logHandler import log
 
-from .configPanel import \
-	db_config  # Imports the instance of the DatabaseConfig class
+from .dbConfig import DatabaseConfig
 from .varsConfig import addonPath
 
-# Add the lib/ folder to sys.path (only once)
+ADDON_DATA_DIR = os.path.join(
+	globalVars.appArgs.configPath,
+	"sira"
+)
+
+if not os.path.isdir(ADDON_DATA_DIR):
+	os.makedirs(ADDON_DATA_DIR)
+
+DEFAULT_DB_PATH = os.path.join(
+	ADDON_DATA_DIR,
+	"database.db"
+)
+
+db = DatabaseConfig(DEFAULT_DB_PATH)
+db.load_config()
+
 libPath = os.path.join(addonPath, "lib")
 if libPath not in sys.path:
 	sys.path.insert(0, libPath)
@@ -84,7 +99,7 @@ class Section:
 
 	def __enter__(self):
 		"""Método de entrada para o gerenciador de contexto."""
-		self.connect = sql.connect(db_config.get_current_database_path())
+		self.connect = sql.connect(db.get_current_database_path())
 		self.connect.row_factory = self.dict_factory # Adicionado aqui para consistência
 		self.cursor = self.connect.cursor()
 		self.connected = True

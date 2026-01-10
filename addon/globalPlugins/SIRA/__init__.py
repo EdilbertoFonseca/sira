@@ -28,7 +28,7 @@ from .medicalDischarge import MedicalDischarge
 from .messageForTransport import MessageForTransport
 from .model import Section
 from .updateManager import UpdateManager
-from .varsConfig import ADDON_NAME, ADDON_SUMMARY, ADDON_VERSION
+from .varsConfig import ADDON_NAME, ADDON_SUMMARY, ADDON_VERSION, initConfiguration
 
 # Initialize translation support
 addonHandler.initTranslation()
@@ -55,11 +55,14 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		super().__init__()
 		log.info(f"{ADDON_NAME} {ADDON_VERSION} initializing")
 
+		# Ensure configuration is initialized
+		initConfiguration()
+
 		# Inicialização tardia (evita efeitos colaterais no import)
 		try:
 			Section.initDB()
 		except Exception as e:
-			log.error(f"Database initialization failed: {e}", excinfo=True)
+			log.error(f"Database initialization failed: {e}")
 
 		self.updateManager = UpdateManager(
 			reponame=GITHUB_REPO,

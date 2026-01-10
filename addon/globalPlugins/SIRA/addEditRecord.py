@@ -22,7 +22,7 @@ import wx
 from logHandler import log
 
 from . import controller as core
-from .varsConfig import addonPath, ourAddon
+from .varsConfig import addonPath, ADDON_NAME
 
 # Add the lib/ folder to sys.path (only once)
 libPath = os.path.join(addonPath, "lib")
@@ -32,7 +32,7 @@ if libPath not in sys.path:
 try:
 	from masked.textctrl import TextCtrl
 except ImportError as e:
-	log.error(f"[{ourAddon}] Error when importing internal library 'masked': {e}")
+	log.error(f"[{ADDON_NAME}] Error when importing internal library 'masked': {e}")
 	raise ImportError(_("Mandatory Library Absent: Masked"))
 
 # Global Constants for Regex
@@ -77,8 +77,14 @@ class AddEditRecDialog(wx.Dialog):
 
 		wx.Dialog.__init__(self, parent, title=_("{} extensions.").format(title), size=(WIDTH, HEIGHT))
 
-		self.formatLandline = config.conf[ourAddon.name]["formatLandline"]
-		self.formatCellPhone = config.conf[ourAddon.name]["formatCellPhone"]
+		# Get the configuration for this add-on.
+		conf = config.conf.get(ADDON_NAME)
+
+		if conf is None:
+			conf = config.conf[ADDON_NAME]
+
+		self.formatLandline = conf.get("formatLandline") or "(##) ####-####" 
+		self.formatCellPhone = conf.get("formatCellPhone") or "(##) #####-####"
 		self.addRecord = addRecord
 		self.selectedRow = row
 

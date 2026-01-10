@@ -15,7 +15,6 @@ import os
 
 import addonHandler
 import config
-from logHandler import log
 
 # Constantes
 mask_date = "XX/XX/XXXX"
@@ -26,48 +25,29 @@ mask_phone = "(XX) XXXXX-XXXX"
 addonPath = os.path.dirname(__file__)
 
 # Config# Get the add-on summary contained in the manifest.
-ADDON_NAME = addonHandler.getCodeAddon().manifest["name"]
 ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 ADDON_DESCRIPTION = addonHandler.getCodeAddon().manifest["description"]
 ADDON_VERSION = addonHandler.getCodeAddon().manifest["version"]
 
-
-def getOurAddon():
-	"""
-	Retrieves the current add-on.
-	Returns:
-		addonHandler.Addon: The current add-on instance.
-	"""
-	try:
-		return addonHandler.getCodeAddon()
-	except Exception as e:
-		log.error(f"Error getting the add-on: {e}")
-
-
-# Retrieve the current add-on instance
-ourAddon = getOurAddon()
-
+_addon = addonHandler.getCodeAddon()
+ADDON_NAME = _addon.name
 
 def initConfiguration():
 	"""
 	Initializes the configuration specification for the Contacts Manager for NVDA add-on.
 	"""
-	try:
-		confspec = {
-			"formatLandline": """string(default="(##) ####-####")""",
-			"formatCellPhone": """string(default="(##) #####-####")""",
-			"resetRecords": "boolean(default=True)",
-			"importCSV": "boolean(default=True)",
-			"exportCSV": "boolean(default=True)",
-			"path": "string(default="")",
-			"altPath": "string(default="")",
-			#"xx": "string(default="")",
-			"databaseIndex": "integer(default=0)",
-		}
-		config.conf.spec[ourAddon.name] = confspec
-	except Exception as e:
-		log.error("Error initializing configuration: {}".format(str(e)))
+	confspec = {
+		"formatLandline": 'string(default="(##) ####-####")',
+		"formatCellPhone": 'string(default="(##) #####-####")',
+		"removeConfigOnUninstall": "boolean(default=False)",
+		"resetRecords": "boolean(default=True)",
+		"importCSV": "boolean(default=True)",
+		"exportCSV": "boolean(default=True)",
+		"path": 'string(default="")',
+		"altPath": 'string(default="")',
+		"databaseIndex": "integer(default=0)",
+	}
+	config.conf.spec[ADDON_NAME] = confspec
 
-
-# Initialize the configuration
-initConfiguration()
+	if ADDON_NAME not in config.conf:
+		config.conf[ADDON_NAME] = {}

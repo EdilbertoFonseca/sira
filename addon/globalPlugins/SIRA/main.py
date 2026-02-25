@@ -64,6 +64,8 @@ class SIRA(wx.Dialog):
 		# Creating the screen objects.
 		panel = wx.Panel(self)
 		self.contactList = wx.ListCtrl(panel, style=wx.LC_REPORT | wx.SUNKEN_BORDER)
+		self._create_columns()
+		self._itemMap = {}
 		self.initialize_contact_list()
 		self.contactList.SetFocus()
 
@@ -140,8 +142,8 @@ class SIRA(wx.Dialog):
 		self.buttonResetRecords.Bind(wx.EVT_BUTTON, self.onReset, self.buttonResetRecords)
 		self.buttonExit.Bind(wx.EVT_BUTTON, self.onClose, self.buttonExit)
 
-	def initialize_contact_list(self):
-		self.contactList.ClearAll()
+
+	def _create_columns(self):
 		columns = [
 			(_("Secretary office"), 150),
 			(_("Landline"), 100),
@@ -151,12 +153,22 @@ class SIRA(wx.Dialog):
 			(_("Cell phone"), 100),
 			(_("Email"), 300),
 		]
-		for i, (title, width) in enumerate(columns):
-			self.contactList.InsertColumn(i, title, width=width)
+
+		for i, (label, width) in enumerate(columns):
+			self.contactList.InsertColumn(i, label)
+			self.contactList.SetColumnWidth(i, width)
+
+	def initialize_contact_list(self):
+		self.contactList.DeleteAllItems()
+
+		self._itemMap = {}
 
 		for record in self.contactResults:
-			index = self.contactList.InsertItem(self.contactList.GetItemCount(), record.secretary_office)
-			# Tupla com os atributos para um loop mais eficiente
+			index = self.contactList.InsertItem(
+				self.contactList.GetItemCount(),
+				record.secretary_office
+			)
+
 			record_values = (
 				record.landline,
 				record.sector,
@@ -165,9 +177,11 @@ class SIRA(wx.Dialog):
 				record.cell,
 				record.email
 			)
-			for i, value in enumerate(record_values, start=1):
-				self.contactList.SetItem(index, i, value)
-			self.contactList.SetItemData(index, id(record))
+
+			for colIndex, value in enumerate(record_values, start=1):
+				self.contactList.SetItem(index, colIndex, value)
+
+			self._itemMap[index] = record
 
 	def onNew(self, event):
 		"""Add a new record to the agenda."""
@@ -477,14 +491,10 @@ If an error occurs when saving the CSV file, an error message will be shown
 		self.Destroy()
 
 	def get_selected_record(self):
-		index = self.contactList.GetFirstSelected()
-		if index == -1:
+		idx = self.contactList.GetFirstSelected()
+		if idx == -1:
 			return None
-		itemId = self.contactList.GetItemData(index)
-		for obj in self.contactResults:
-			if id(obj) == itemId:
-				return obj
-		return None
+		return self._itemMap.get(idx)
 
 	def show_all_records(self):
 		self.contactResults = core.get_all_records()

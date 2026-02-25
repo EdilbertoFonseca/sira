@@ -18,7 +18,7 @@ import globalVars
 from .dbConfig import DatabaseConfig
 from .sqlLoader import sql
 
-ADDON_DATA_DIR = os.path.join(globalVars.appArgs.configPath, "SIRA")
+ADDON_DATA_DIR = os.path.join(globalVars.appArgs.configPath, "SIRA") # pyright: ignore[reportCallIssue]
 
 if not os.path.isdir(ADDON_DATA_DIR):
 	os.makedirs(ADDON_DATA_DIR)
@@ -48,6 +48,7 @@ class ObjectExtensionRegistrationSystem(object):
 			cell (str): Contact's cell phone number.
 			email (str): Contact email address.
 		"""
+		super().__init__()  # calls the init of the parent class (silences linters and maintains compatibility)
 		self.id = id
 		self.secretary_office = secretary_office
 		self.landline = landline
@@ -92,7 +93,7 @@ class Section:
 			self.connect.close()
 		self.connected = False
 		return False
-	
+
 	# Métodos connection e disconnect foram removidos.
 
 	def execute(self, sql, parms=None):

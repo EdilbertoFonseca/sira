@@ -113,7 +113,7 @@ class MaskedTextCtrl(wx.TextCtrl):
 				if next_pos is None:
 					next_pos = len(new_value)
 				self.SetInsertionPoint(next_pos)
-			
+
 			# Beep quando campo completo (sem placeholders)
 			if self.PLACEHOLDER_CHAR not in new_value:
 				winsound.MessageBeep()

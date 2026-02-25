@@ -40,5 +40,5 @@ When a contact is selected from the list, it is displayed in a preview field, ma
 
 ## Contributions
 
-Suggestions and improvements are welcome.  
+Suggestions and improvements are welcome.
 Feel free to get in touch via the email above or open an issue on the project page if it is publicly hosted.

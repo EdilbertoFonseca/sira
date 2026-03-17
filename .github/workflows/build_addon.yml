@@ -41,7 +41,7 @@ jobs:
 
     - name: Install Pyright
       run: |
-        npm install -g pyright
+        npm install -g pyright@latest
         echo "$(npm config get prefix)/bin" >> $GITHUB_PATH
 
     - name: Install uv

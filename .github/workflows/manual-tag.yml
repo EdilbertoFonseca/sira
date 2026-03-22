@@ -11,36 +11,67 @@ on:
         required: false
 
 jobs:
-  manual-tag:
+  manual-release:
     runs-on: ubuntu-latest
-
-    # SECURITY: Set permissions for this Job only
     permissions:
       contents: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
-      - name: Create annotated tag
+      # Install dependencies and prepare environment (similar to build_addon.yml)
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5 # v5 é a versão estável atual
+
+      - name: Set up Python
+        run: uv python install 3.13
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y gettext
+
+      - name: Install Python dependencies
+        run: uv sync --frozen
+
+      # Process the tag, build the addon, and create the release
+      - name: Process Tag and Build
+        env:
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+          INPUT_COMMIT: ${{ github.event.inputs.commit }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-          # Usa o commit fornecido ou HEAD por padrão
-          if [ -z "${{ github.event.inputs.commit }}" ]; then
-            COMMIT=$(git rev-parse HEAD)
+          # 1. Check the commit to be tagged (default is HEAD)
+          if [ -z "$INPUT_COMMIT" ]; then
+            TARGET_COMMIT=$(git rev-parse HEAD)
           else
-            COMMIT=${{ github.event.inputs.commit }}
+            TARGET_COMMIT="$INPUT_COMMIT"
           fi
+          git checkout $TARGET_COMMIT
 
-          # Pega a versão do input corretamente
-          VERSION="${{ github.event.inputs.version }}"
+          # 2. Build the addon and generate .pot files
+          uv run scons
+          uv run scons pot
 
-          echo "Creating tag $VERSION at commit $COMMIT"
+          # 3. Create the annotated tag and push it to the repository
+          git tag -a "$INPUT_VERSION" -m "release: version ${INPUT_VERSION#v}" "$TARGET_COMMIT"
+          git push origin "$INPUT_VERSION"
 
-          # Cria tag anotada
-          git tag -a "$VERSION" -m "Release $VERSION" $COMMIT
+          # 4. Calculate Checksum (SHA256) for the release notes
+          echo -e "\nSHA256 Checksum:" > release_notes.md
+          sha256sum *.nvda-addon >> release_notes.md
 
-          # Envia tag para o remoto
-          git push origin "$VERSION"
+          # 5. Create GitHub Release with the tag and upload assets
+          echo "🚀 Publishing Release with Assets..."
+          gh release create "$INPUT_VERSION" \
+            ./*.nvda-addon \
+            ./*.pot \
+            --target "$TARGET_COMMIT" \
+            --title "Release $INPUT_VERSION" \
+            --notes-file release_notes.md

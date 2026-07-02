@@ -214,7 +214,7 @@ class MedicalDischarge(wx.Dialog):
 			panel,
 			label=_("Escort: "),
 		)
-		self.textAcompanhante = wx.TextCtrl(panel, value="", size=(300, -1))
+		self.textAcompanhante = wx.TextCtrl(panel, value="Não informado", size=(300, -1))
 		view_fields_box.Add(
 			self.labelAcompanhante,
 			flag=wx.TOP | wx.LEFT,
@@ -411,16 +411,8 @@ class MedicalDischarge(wx.Dialog):
 		"""
 		Formata a mensagem com os dados coletados.
 
-		Args:
-						name (str): Nome do remetente.
-						message (str): Texto da mensagem.
-						date (str): Data da viagem.
-						time (str): Hora da viagem.
-						point (str): Ponto de encontro.
-						phone (str): Telefone do remetente.
-
 		Returns:
-						str: A mensagem formatada.
+			str: A mensagem formatada.
 		"""
 
 		timestamp = datetime.now().strftime("%H:%M %d/%m/%Y")
@@ -433,11 +425,25 @@ Endereço: {variables["endereço"]}
 Quarto: {variables["quarto"]}
 Leito: {variables["leito"]}
 Transporte: {variables["transporte"]}
-Contato: {variables["contatoDoPaciente"]}
-Acompanhante: {variables["acompanhante"]}
-Contato do acompanhante: {variables["contatoDoAcompanhante"]}
+"""
 
-Avisado por {variables["responsavelPelaAlta"]} as {timestamp}.
+		# Contato do paciente
+		if variables["contatoDoPaciente"] != "(__) _____-____":
+			msg += f'Contato: {variables["contatoDoPaciente"]}\n'
+
+		# Acompanhante
+		if variables["acompanhante"].strip():
+			msg += f'Acompanhante: {variables["acompanhante"]}\n'
+
+			# Contato do acompanhante
+			if variables["contatoDoAcompanhante"] != "(__) _____-____":
+				msg += (
+					f'Contato do acompanhante: '
+					f'{variables["contatoDoAcompanhante"]}\n'
+				)
+
+		msg += f"""
+Avisado por {variables["responsavelPelaAlta"]} às {timestamp}.
 Contato: {variables["contatoDoResponsavelPelaAlta"]}
 """
 

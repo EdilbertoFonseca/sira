@@ -326,7 +326,10 @@ class MessageForTransport(wx.Dialog):
 				str: A mensagem formatada.
 		"""
 		timestamp = datetime.now().strftime("%H:%M %d/%m/%Y")
-		return f"{name} solicitou o cancelamento da viagem agendada para {patient} marcada para o dia {date} às {time}, com destino à cidade de {city}.\nPonto: {point}\nContato: {phone}\n\nAvisado por {name} às {timestamp}\n"
+		if phone == "(__) _____-____":
+			return f"{name} solicitou o cancelamento da viagem agendada para {patient} marcada para o dia {date} às {time}, com destino à cidade de {city}.\nPonto: {point}\n\nAvisado por {name} às {timestamp}\n"
+		else:
+			return f"{name} solicitou o cancelamento da viagem agendada para {patient} marcada para o dia {date} às {time}, com destino à cidade de {city}.\nPonto: {point}\nContato: {phone}\n\nAvisado por {name} às {timestamp}\n"
 
 	def _generate_file_name(self, subject):
 		"""
@@ -398,6 +401,7 @@ class MessageForTransport(wx.Dialog):
 		for ctrl in text_controls:
 			ctrl.Clear()
 
+		self.textSubject.SetValue("Recado para o transporte")
 		# Foca no campo do remetente
 		self.textSenderName.SetFocus()
 

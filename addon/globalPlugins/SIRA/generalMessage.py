@@ -274,7 +274,12 @@ class GeneralMessage(wx.Dialog):
 				str: A mensagem formatada.
 		"""
 		timestamp = datetime.now().strftime("%H:%M %d/%m/%Y")
-		return f"{message}.\nContato: {phone}\n\nAvisado por {name} às {timestamp}\n"
+		if phone == "(__) _____-____":
+			return f"{message}.\n\nAvisado por {name} às {timestamp}\n"
+		else:
+			return f"{message}.\nContato: {phone}\n\nAvisado por {name} às {timestamp}\n"
+
+
 
 	def _generate_file_name(self, subject):
 		"""

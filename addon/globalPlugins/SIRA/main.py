@@ -109,7 +109,7 @@ class SIRA(wx.Dialog):
 		self.buttonEdit = wx.Button(panel, wx.ID_EDIT, label=_("&Edit"))
 		self.buttonNew = wx.Button(panel, wx.ID_NEW, label=_("&New"))
 		self.buttonDelete = wx.Button(panel, wx.ID_DELETE, label=_("&Remove"))
-		self.buttonFindDuplicates = wx.Button(panel, label=_("Find Duplicates"))
+		self.buttonFindDuplicates = wx.Button(panel, label=_("Find &Duplicates"))
 		self.buttonSaveResearch = wx.Button(panel, wx.ID_SAVE, label=_("&Save the research"))
 		self.buttonRefresh = wx.Button(panel, -1, label=_("Refres&h"))
 		self.buttonImport = wx.Button(panel, -1, label=_("&Import csv..."))
@@ -551,7 +551,7 @@ class SIRA(wx.Dialog):
 			f"{self.contactList.GetColumn(i).GetText()}: {self.contactList.GetItem(selected_idx, i).GetText()}"
 			for i in range(self.contactList.GetColumnCount())
 		]
-		lineComplete = " | ".join(data)
+		lineComplete = " \n\n ".join(data)
 		self.visualizationField.SetValue(lineComplete)
 
 	def whenPressingLetters(self, event):

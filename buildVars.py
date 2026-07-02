@@ -25,7 +25,7 @@ addon_info = AddonInfo(
 	# Translators: Long description to be shown for this add-on on add-on information from add-on store
 	addon_description=_("""SIRA (an acronym in Portuguese for Sistema Interno de Ramais e Anotações) is an add-on designed to improve internal communication and the recording of essential information within the Health Department."""),
 	# version
-	addon_version="2026.3.0",
+	addon_version="2026.3.1",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
 	addon_changelog=_("""Added layer shortcut functionality."""),

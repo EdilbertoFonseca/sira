@@ -429,18 +429,15 @@ Transporte: {variables["transporte"]}
 
 		# Contato do paciente
 		if variables["contatoDoPaciente"] != "(__) _____-____":
-			msg += f'Contato: {variables["contatoDoPaciente"]}\n'
+			msg += f"Contato: {variables['contatoDoPaciente']}\n"
 
 		# Acompanhante
 		if variables["acompanhante"].strip():
-			msg += f'Acompanhante: {variables["acompanhante"]}\n'
+			msg += f"Acompanhante: {variables['acompanhante']}\n"
 
 			# Contato do acompanhante
 			if variables["contatoDoAcompanhante"] != "(__) _____-____":
-				msg += (
-					f'Contato do acompanhante: '
-					f'{variables["contatoDoAcompanhante"]}\n'
-				)
+				msg += f"Contato do acompanhante: {variables['contatoDoAcompanhante']}\n"
 
 		msg += f"""
 Avisado por {variables["responsavelPelaAlta"]} às {timestamp}.

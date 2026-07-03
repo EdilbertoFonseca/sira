@@ -279,8 +279,6 @@ class GeneralMessage(wx.Dialog):
 		else:
 			return f"{message}.\nContato: {phone}\n\nAvisado por {name} às {timestamp}\n"
 
-
-
 	def _generateFileName(self, subject):
 		"""
 		Gera o nome do arquivo baseado no assunto e no timestamp atual.

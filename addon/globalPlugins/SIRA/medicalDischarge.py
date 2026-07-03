@@ -103,19 +103,19 @@ class MedicalDischarge(wx.Dialog):
 
 		# Layout
 		panel = wx.Panel(self)
-		main_sizer = wx.BoxSizer(wx.VERTICAL)
-		view_fields_box = wx.BoxSizer(wx.VERTICAL)
-		view_button_box = wx.BoxSizer(wx.HORIZONTAL)
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		viewFieldsBox = wx.BoxSizer(wx.VERTICAL)
+		viewButtonBox = wx.BoxSizer(wx.HORIZONTAL)
 
 		# Nome do Hospital
 		self.labelHospital = wx.StaticText(panel, label=_("Hospital: "))
 		self.textHospital = wx.TextCtrl(panel, value="", size=(300, -1))
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.labelHospital,
 			flag=wx.TOP | wx.LEFT,
 			border=5,
 		)
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.textHospital,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -124,12 +124,12 @@ class MedicalDischarge(wx.Dialog):
 		# Paciente
 		self.labelPaciente = wx.StaticText(panel, label=_("Patient: "))
 		self.textPaciente = wx.TextCtrl(panel, value="", size=(300, -1))
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.textPaciente,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
 		)
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.labelPaciente,
 			flag=wx.TOP | wx.LEFT,
 			border=5,
@@ -142,12 +142,12 @@ class MedicalDischarge(wx.Dialog):
 			style=wx.TE_MULTILINE,
 			size=(300, 150),
 		)
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.labelEndereco,
 			flag=wx.TOP | wx.LEFT,
 			border=5,
 		)
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.textAddress,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -156,8 +156,8 @@ class MedicalDischarge(wx.Dialog):
 		# Quarto
 		self.labelQuarto = wx.StaticText(panel, label=_("Hospital room: "))
 		self.textQuarto = wx.TextCtrl(panel, value="", size=(300, -1))
-		view_fields_box.Add(self.labelQuarto, flag=wx.TOP | wx.LEFT, border=5)
-		view_fields_box.Add(
+		viewFieldsBox.Add(self.labelQuarto, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(
 			self.textQuarto,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -166,8 +166,8 @@ class MedicalDischarge(wx.Dialog):
 		# Leito
 		self.labelLeito = wx.StaticText(panel, label=_("Bed: "))
 		self.textBed = wx.TextCtrl(panel, value="", size=(300, -1))
-		view_fields_box.Add(self.labelLeito, flag=wx.TOP | wx.LEFT, border=5)
-		view_fields_box.Add(
+		viewFieldsBox.Add(self.labelLeito, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(
 			self.textBed,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -176,12 +176,12 @@ class MedicalDischarge(wx.Dialog):
 		# Transporte
 		self.labelTransporte = wx.StaticText(panel, label=_("Transporte: "))
 		self.textTransporte = wx.TextCtrl(panel, size=(250, 25))
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.labelTransporte,
 			flag=wx.TOP | wx.LEFT,
 			border=5,
 		)
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.textTransporte,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -198,12 +198,12 @@ class MedicalDischarge(wx.Dialog):
 			size=(300, -1),
 		)
 		self.textPatientContact.Bind(wx.EVT_CHAR_HOOK, self.onPasteAndClean)
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.labelContatoDoPaciente,
 			flag=wx.TOP | wx.LEFT,
 			border=5,
 		)
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.textPatientContact,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -215,12 +215,12 @@ class MedicalDischarge(wx.Dialog):
 			label=_("Escort: "),
 		)
 		self.textAcompanhante = wx.TextCtrl(panel, value="Não informado", size=(300, -1))
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.labelAcompanhante,
 			flag=wx.TOP | wx.LEFT,
 			border=5,
 		)
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.textAcompanhante,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -237,12 +237,12 @@ class MedicalDischarge(wx.Dialog):
 			size=(300, -1),
 		)
 		self.textContatoDoAcompanhante.Bind(wx.EVT_CHAR_HOOK, self.onPasteAndClean)
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.labelContatoDoAcompanhante,
 			flag=wx.TOP | wx.LEFT,
 			border=5,
 		)
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.textContatoDoAcompanhante,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -254,12 +254,12 @@ class MedicalDischarge(wx.Dialog):
 			label=_("Responsible for discharge: "),
 		)
 		self.textResponsavelPelaAlta = wx.TextCtrl(panel, value="", size=(300, -1))
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.labelResponsavelPelaAlta,
 			flag=wx.TOP | wx.LEFT,
 			border=5,
 		)
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.textResponsavelPelaAlta,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -276,52 +276,52 @@ class MedicalDischarge(wx.Dialog):
 			size=(300, -1),
 		)
 		self.textContatoDoResponsavelPelaAlta.Bind(wx.EVT_CHAR_HOOK, self.onPasteAndClean)
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.labelContatoDoResponsavelPelaAlta,
 			flag=wx.TOP | wx.LEFT,
 			border=5,
 		)
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.textContatoDoResponsavelPelaAlta,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
 		)
 
 		# Botão para Salvar o recado
-		self.save_button = wx.Button(panel, label=_("&Save"))
-		self.save_button.Bind(wx.EVT_BUTTON, self.OnSave)
-		view_button_box.Add(
-			self.save_button,
+		self.saveButton = wx.Button(panel, label=_("&Save"))
+		self.saveButton.Bind(wx.EVT_BUTTON, self.OnSave)
+		viewButtonBox.Add(
+			self.saveButton,
 			flag=wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM,
 			border=10,
 		)
 
 		# Botão para limpar os campos
-		self.clean_button = wx.Button(panel, label=_("C&lean"))
-		self.clean_button.Bind(wx.EVT_BUTTON, self.onClean)
-		view_button_box.Add(
-			self.clean_button,
+		self.cleanButton = wx.Button(panel, label=_("C&lean"))
+		self.cleanButton.Bind(wx.EVT_BUTTON, self.onClean)
+		viewButtonBox.Add(
+			self.cleanButton,
 			flag=wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM,
 			border=10,
 		)
 
 		# Botão para cancelar o diálogo
-		self.cancel_button = wx.Button(panel, wx.ID_CANCEL, label=_("&Cancel"))
-		self.cancel_button.Bind(wx.EVT_BUTTON, self.onCancel)
-		view_button_box.Add(
-			self.cancel_button,
+		self.cancelButton = wx.Button(panel, wx.ID_CANCEL, label=_("&Cancel"))
+		self.cancelButton.Bind(wx.EVT_BUTTON, self.onCancel)
+		viewButtonBox.Add(
+			self.cancelButton,
 			flag=wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM,
 			border=10,
 		)
 
-		main_sizer.Add(view_fields_box, flag=wx.EXPAND | wx.ALL, border=10)
-		main_sizer.Add(
-			view_button_box,
+		mainSizer.Add(viewFieldsBox, flag=wx.EXPAND | wx.ALL, border=10)
+		mainSizer.Add(
+			viewButtonBox,
 			flag=wx.ALIGN_CENTER | wx.TOP,
 			border=10,
 		)
 		# Aplicando o sizer principal no painel
-		panel.SetSizerAndFit(main_sizer)
+		panel.SetSizerAndFit(mainSizer)
 
 	def OnSave(self, event):
 		"""
@@ -355,18 +355,18 @@ class MedicalDischarge(wx.Dialog):
 		}
 
 		# Verifica se os campos obrigatórios estão vazios
-		if self._are_required_fields_empty(variables):
+		if self._areRequiredFieldsEmpty(variables):
 			return
 
 		# Formata a mensagem
-		altaMedica = self._format_message(variables)
+		altaMedica = self._formatMessage(variables)
 
 		# Gera o caminho e nome do arquivo
-		file_name = self._generate_file_name(variables["hospital"])
+		fileName = self._generateFileName(variables["hospital"])
 
 		# Tenta salvar o arquivo
-		if self._save_message_to_file(file_name, altaMedica):
-			self.show_message(
+		if self._saveMessageToFile(fileName, altaMedica):
+			self.showMessage(
 				_("High Medical Saves successfully!"),
 				_(
 					"Attention",
@@ -375,15 +375,15 @@ class MedicalDischarge(wx.Dialog):
 			)
 			self.onClean(event)
 
-	def _are_required_fields_empty(self, variables):
-		empty_fields = [field for field, value in variables.items() if not value]
-		if empty_fields:
-			self.show_message(_("Fill in all fields!"), _("Attention"), wx.OK | wx.ICON_WARNING)
-			self.focus_on_empty_field(empty_fields[0])
+	def _areRequiredFieldsEmpty(self, variables):
+		emptyFields = [field for field, value in variables.items() if not value]
+		if emptyFields:
+			self.showMessage(_("Fill in all fields!"), _("Attention"), wx.OK | wx.ICON_WARNING)
+			self.focusOnEmptyField(emptyFields[0])
 			return True
 		return False
 
-	def focus_on_empty_field(self, field):
+	def focusOnEmptyField(self, field):
 		if field == "hospital":
 			self.textHospital.SetFocus()
 		elif field == "paciente":
@@ -407,7 +407,7 @@ class MedicalDischarge(wx.Dialog):
 		elif field == "contatoDoResponsavelPelaAlta":
 			self.textContatoDoResponsavelPelaAlta.SetFocus()
 
-	def _format_message(self, variables):
+	def _formatMessage(self, variables):
 		"""
 		Formata a mensagem com os dados coletados.
 
@@ -449,7 +449,7 @@ Contato: {variables["contatoDoResponsavelPelaAlta"]}
 
 		return msg
 
-	def _generate_file_name(self, hospital):
+	def _generateFileName(self, hospital):
 		"""
 		Gera o nome do arquivo baseado no assunto e no timestamp atual.
 
@@ -460,17 +460,17 @@ Contato: {variables["contatoDoResponsavelPelaAlta"]}
 						str: Nome do arquivo a ser salvo.
 		"""
 
-		caminho_documentos = os.path.join(
+		caminhoDocumentos = os.path.join(
 			os.environ["USERPROFILE"],
 			"Documents",
 		)
-		cod_file = datetime.now().strftime("%H-%M %d-%m-%Y")
+		codFile = datetime.now().strftime("%H-%M %d-%m-%Y")
 		return os.path.join(
-			caminho_documentos,
-			f"Alta médica - Hospital {hospital} {cod_file}.txt" if hospital else "Alta médica.txt",
+			caminhoDocumentos,
+			f"Alta médica - Hospital {hospital} {codFile}.txt" if hospital else "Alta médica.txt",
 		)
 
-	def _save_message_to_file(self, file_name, altaMedica):
+	def _saveMessageToFile(self, fileName, altaMedica):
 		"""
 		Salva a mensagem no arquivo de texto.
 
@@ -482,11 +482,11 @@ Contato: {variables["contatoDoResponsavelPelaAlta"]}
 						bool: Retorna True se o salvamento for bem-sucedido, False caso contrário.
 		"""
 		try:
-			with open(file_name, "a") as file:
+			with open(fileName, "a") as file:
 				file.write(altaMedica + "\n")
 			return True
 		except Exception as e:
-			self.show_message(
+			self.showMessage(
 				_(
 					"Error when saving message: {}".format(
 						str(e),
@@ -508,7 +508,7 @@ Contato: {variables["contatoDoResponsavelPelaAlta"]}
 						- Remove o conteúdo de todos os campos de texto listados.
 						- Move o foco para o campo do remetente após a limpeza.
 		"""
-		text_controls = [
+		textControls = [
 			self.textHospital,
 			self.textPaciente,
 			self.textBed,
@@ -523,13 +523,13 @@ Contato: {variables["contatoDoResponsavelPelaAlta"]}
 		]
 
 		# Percorre os campos efetuando a limpeza
-		for ctrl in text_controls:
+		for ctrl in textControls:
 			ctrl.Clear()
 
 		# Foca no campo hospital
 		self.textHospital.SetFocus()
 
-	def show_message(self, message, caption=None, style=None):
+	def showMessage(self, message, caption=None, style=None):
 		"""
 		Displays a message to the user in a dialog box.
 

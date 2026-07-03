@@ -6,10 +6,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 'SIRA' '2026.3.0'\n"
+"Project-Id-Version: 'SIRA' '2026.3.1'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2026-05-06 15:38-0300\n"
-"PO-Revision-Date: 2026-05-06 15:40-0300\n"
+"POT-Creation-Date: 2026-07-03 09:30-0300\n"
+"PO-Revision-Date: 2026-07-03 09:34-0300\n"
 "Last-Translator: Edilberto Fonseca <edilberto.fonseca@outlook.com>\n"
 "Language-Team: Edilberto Fonseca <edilberto.fonseca@outlook.com>\n"
 "Language: pt_BR\n"
@@ -158,12 +158,12 @@ msgstr "&Cancelar"
 #: addon\globalPlugins\SIRA\addEditRecord.py:231
 #: addon\globalPlugins\SIRA\addEditRecord.py:257
 #: addon\globalPlugins\SIRA\addEditRecord.py:307
-#: addon\globalPlugins\SIRA\generalMessage.py:318
+#: addon\globalPlugins\SIRA\generalMessage.py:323
 #: addon\globalPlugins\SIRA\main.py:217 addon\globalPlugins\SIRA\main.py:241
 #: addon\globalPlugins\SIRA\main.py:254 addon\globalPlugins\SIRA\main.py:359
 #: addon\globalPlugins\SIRA\main.py:378
-#: addon\globalPlugins\SIRA\medicalDischarge.py:489
-#: addon\globalPlugins\SIRA\messageForTransport.py:370
+#: addon\globalPlugins\SIRA\medicalDischarge.py:495
+#: addon\globalPlugins\SIRA\messageForTransport.py:373
 msgid "Error"
 msgstr "Erro"
 
@@ -195,7 +195,7 @@ msgstr "Erro ao editar o contato: {}"
 #. Translators: Message displayed to the user in case of errors when exporting the CSV file
 #: addon\globalPlugins\SIRA\addEditRecord.py:323
 #: addon\globalPlugins\SIRA\generalMessage.py:249
-#: addon\globalPlugins\SIRA\generalMessage.py:360
+#: addon\globalPlugins\SIRA\generalMessage.py:365
 #: addon\globalPlugins\SIRA\main.py:245 addon\globalPlugins\SIRA\main.py:265
 #: addon\globalPlugins\SIRA\main.py:306 addon\globalPlugins\SIRA\main.py:314
 #: addon\globalPlugins\SIRA\main.py:332 addon\globalPlugins\SIRA\main.py:340
@@ -204,11 +204,79 @@ msgstr "Erro ao editar o contato: {}"
 #: addon\globalPlugins\SIRA\manageDuplicatesDialog.py:119
 #: addon\globalPlugins\SIRA\medicalDischarge.py:372
 #: addon\globalPlugins\SIRA\medicalDischarge.py:381
-#: addon\globalPlugins\SIRA\medicalDischarge.py:540
+#: addon\globalPlugins\SIRA\medicalDischarge.py:546
 #: addon\globalPlugins\SIRA\messageForTransport.py:295
-#: addon\globalPlugins\SIRA\messageForTransport.py:417
+#: addon\globalPlugins\SIRA\messageForTransport.py:421
 msgid "Attention"
 msgstr "Atenção"
+
+#. --- GRUPO 1: Máscaras de Telefone ---
+#: addon\globalPlugins\SIRA\configPanel.py:56
+msgid "Phone field masks:"
+msgstr "Máscaras dos campos de telefone:"
+
+#: addon\globalPlugins\SIRA\configPanel.py:60
+msgid "Cell phone:"
+msgstr "Celular:"
+
+#: addon\globalPlugins\SIRA\configPanel.py:69
+msgid "Landline:"
+msgstr "Telefone fixo:"
+
+#. --- GRUPO 2: Opções Gerais ---
+#: addon\globalPlugins\SIRA\configPanel.py:81
+msgid "General Options:"
+msgstr "Opções Gerais:"
+
+#: addon\globalPlugins\SIRA\configPanel.py:84
+msgid "Remove settings on uninstall"
+msgstr "Remover configurações ao desinstalar"
+
+#: addon\globalPlugins\SIRA\configPanel.py:87
+msgid "Show option to delete entire calendar"
+msgstr "Mostrar opção para excluir todo o calendário"
+
+#: addon\globalPlugins\SIRA\configPanel.py:90
+msgid "Show import CSV button"
+msgstr "Mostrar botão de importação CSV"
+
+#: addon\globalPlugins\SIRA\configPanel.py:93
+msgid "Show export CSV button"
+msgstr "Mostrar botão de exportação CSV"
+
+#. --- GRUPO 3: Localização dos Dados ---
+#: addon\globalPlugins\SIRA\configPanel.py:101
+msgid "Database Management:"
+msgstr "Gerenciamento de bancos de dados:"
+
+#: addon\globalPlugins\SIRA\configPanel.py:106
+msgid "Empty (Not configured)"
+msgstr "Vazio (Não configurado)"
+
+#: addon\globalPlugins\SIRA\configPanel.py:111
+msgid "Current database path:"
+msgstr "Caminho atual do banco de dados:"
+
+#: addon\globalPlugins\SIRA\configPanel.py:117
+msgid "&Select or add a directory"
+msgstr "&Selecione ou adicione um diretório"
+
+#. Usar self (o painel) como pai é mais seguro
+#: addon\globalPlugins\SIRA\configPanel.py:130
+msgid "Choose where to save the database file"
+msgstr "Escolha onde salvar o arquivo da agenda"
+
+#: addon\globalPlugins\SIRA\configPanel.py:133
+msgid "Database files (*.db)|*.db"
+msgstr "Arquivos de banco de dados (*.db)|*.db"
+
+#: addon\globalPlugins\SIRA\configPanel.py:165
+msgid "The primary database path cannot be empty."
+msgstr "O caminho do banco de dados principal não pode estar vazio."
+
+#: addon\globalPlugins\SIRA\configPanel.py:166
+msgid "Validation Error"
+msgstr "Erro de validação"
 
 #: addon\globalPlugins\SIRA\controller.py:110
 msgid "Missing 'contacts' key in dictionary"
@@ -314,9 +382,9 @@ msgstr "Mensagem salva!"
 msgid "The Name, Subject and Message Fields cannot be null!"
 msgstr "Os campos Nome, Assunto e Mensagem não podem estar vazios!"
 
-#: addon\globalPlugins\SIRA\generalMessage.py:314
-#: addon\globalPlugins\SIRA\medicalDischarge.py:485
-#: addon\globalPlugins\SIRA\messageForTransport.py:366
+#: addon\globalPlugins\SIRA\generalMessage.py:319
+#: addon\globalPlugins\SIRA\medicalDischarge.py:491
+#: addon\globalPlugins\SIRA\messageForTransport.py:369
 msgid "Error when saving message: {}"
 msgstr "Erro ao salvar a mensagem: {}"
 
@@ -342,8 +410,8 @@ msgid "&Remove"
 msgstr "&Remover"
 
 #: addon\globalPlugins\SIRA\main.py:112
-msgid "Find Duplicates"
-msgstr "Encontrar duplicados"
+msgid "Find &Duplicates"
+msgstr "Localizar &duplicados"
 
 #: addon\globalPlugins\SIRA\main.py:113
 msgid "&Save the research"
@@ -612,74 +680,6 @@ msgstr "Ponto: "
 msgid "The Name, Subject, patient and city Fields cannot be null!"
 msgstr "Os campos nome, assunto, paciente e cidade não podem ser nulos!"
 
-#. --- GRUPO 1: Máscaras de Telefone ---
-#: addon\globalPlugins\SIRA\configPanel.py:56
-msgid "Phone field masks:"
-msgstr "Máscaras dos campos de telefone:"
-
-#: addon\globalPlugins\SIRA\configPanel.py:60
-msgid "Cell phone:"
-msgstr "Celular:"
-
-#: addon\globalPlugins\SIRA\configPanel.py:69
-msgid "Landline:"
-msgstr "Telefone fixo:"
-
-#. --- GRUPO 2: Opções Gerais ---
-#: addon\globalPlugins\SIRA\configPanel.py:81
-msgid "General Options:"
-msgstr "Opções Gerais:"
-
-#: addon\globalPlugins\SIRA\configPanel.py:84
-msgid "Remove settings on uninstall"
-msgstr "Remover configurações ao desinstalar"
-
-#: addon\globalPlugins\SIRA\configPanel.py:87
-msgid "Show option to delete entire calendar"
-msgstr "Mostrar opção para excluir todo o calendário"
-
-#: addon\globalPlugins\SIRA\configPanel.py:90
-msgid "Show import CSV button"
-msgstr "Mostrar botão de importação CSV"
-
-#: addon\globalPlugins\SIRA\configPanel.py:93
-msgid "Show export CSV button"
-msgstr "Mostrar botão de exportação CSV"
-
-#. --- GRUPO 3: Localização dos Dados ---
-#: addon\globalPlugins\SIRA\configPanel.py:101
-msgid "Database Management:"
-msgstr "Gerenciamento de bancos de dados:"
-
-#: addon\globalPlugins\SIRA\configPanel.py:106
-msgid "Empty (Not configured)"
-msgstr "Vazio (Não configurado)"
-
-#: addon\globalPlugins\SIRA\configPanel.py:111
-msgid "Current database path:"
-msgstr "Caminho atual do banco de dados:"
-
-#: addon\globalPlugins\SIRA\configPanel.py:117
-msgid "&Select or add a directory"
-msgstr "&Selecione ou adicione um diretório"
-
-#. Usar self (o painel) como pai é mais seguro
-#: addon\globalPlugins\SIRA\configPanel.py:130
-msgid "Choose where to save the database file"
-msgstr "Escolha onde salvar o arquivo da agenda"
-
-#: addon\globalPlugins\SIRA\configPanel.py:133
-msgid "Database files (*.db)|*.db"
-msgstr "Arquivos de banco de dados (*.db)|*.db"
-
-#: addon\globalPlugins\SIRA\configPanel.py:165
-msgid "The primary database path cannot be empty."
-msgstr "O caminho do banco de dados principal não pode estar vazio."
-
-#: addon\globalPlugins\SIRA\configPanel.py:166
-msgid "Validation Error"
-msgstr "Erro de validação"
-
 #. translators: Message shown when the user checks for updates but is already running the latest version of the add-on.
 #: addon\globalPlugins\SIRA\updateManager.py:92
 msgid "You are already running the latest version of SIRA."
@@ -753,8 +753,11 @@ msgstr ""
 #. Brief changelog for this version
 #. Translators: what's new content for the add-on version to be shown in the add-on store
 #: buildVars.py:31
-msgid "Added layer shortcut functionality."
-msgstr "Adicionada a funcionalidade de atalhos em camadas."
+msgid "rename variables and methods to camelCase."
+msgstr "Renomeie as variáveis e os métodos para camelCase."
+
+#~ msgid "Added layer shortcut functionality."
+#~ msgstr "Adicionada a funcionalidade de atalhos em camadas."
 
 #~ msgid ""
 #~ "Fixed an issue where formatting was not correctly applied when pasting "

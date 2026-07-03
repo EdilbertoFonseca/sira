@@ -28,7 +28,7 @@ addon_info = AddonInfo(
 	addon_version="2026.3.1",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
-	addon_changelog=_("""Added layer shortcut functionality."""),
+	addon_changelog=_("""rename variables and methods to camelCase."""),
 	# Author(s)
 	addon_author="Edilberto Fonseca <edilberto.fonseca@outlook.com>",
 	# URL for the add-on documentation support

@@ -36,7 +36,7 @@ class ManageDuplicatesDialog(wx.Dialog):
 		self.duplicates = duplicates
 		self.parent = parent
 		# Dictionary to map the list index to the record ID
-		self.list_map = {}
+		self.listMap = {}
 
 		self.panel = wx.Panel(self)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -56,7 +56,7 @@ class ManageDuplicatesDialog(wx.Dialog):
 		)
 		mainSizer.Add(self.duplicateList, 1, wx.ALL | wx.EXPAND, 10)
 
-		self.initialize_duplicate_list()
+		self.initializeDuplicateList()
 
 		# Action buttons
 		buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -76,10 +76,10 @@ class ManageDuplicatesDialog(wx.Dialog):
 		self.panel.SetSizer(mainSizer)
 		mainSizer.Fit(self)
 
-	def initialize_duplicate_list(self):
+	def initializeDuplicateList(self):
 		"""Fill in the list of duplicates with the data."""
 		self.duplicateList.ClearAll()
-		self.list_map.clear()
+		self.listMap.clear()
 
 		columns = [
 			(_("ID"), 50),
@@ -102,45 +102,45 @@ class ManageDuplicatesDialog(wx.Dialog):
 			self.duplicateList.SetItem(index, 4, record.sector)
 			self.duplicateList.SetItem(index, 5, record.responsible)
 			self.duplicateList.SetItem(index, 6, record.email)
-			self.list_map[index] = record.id
+			self.listMap[index] = record.id
 
 	def onRemoveSelected(self, event):
 		"""Dress with the removal of the selected records."""
-		selected_indices = []
+		selectedIndices = []
 		item = -1
 		while True:
 			# Get the next selected item
 			item = self.duplicateList.GetNextItem(item, wx.LIST_NEXT_ALL, wx.LIST_STATE_SELECTED)
 			if item == -1:
 				break
-			selected_indices.append(item)
+			selectedIndices.append(item)
 
-		if not selected_indices:
+		if not selectedIndices:
 			gui.messageBox(_("No records selected for removal."), _("Attention"))
 			return
 
 		message = _("Are you sure you want to remove the selected duplicate records?")
 		caption = _("Confirm Deletion")
-		user_response = gui.messageBox(message, caption, style=wx.YES_NO | wx.ICON_QUESTION)
+		userResponse = gui.messageBox(message, caption, style=wx.YES_NO | wx.ICON_QUESTION)
 
-		if user_response == wx.YES:
-			deleted_count = 0
-			for index in selected_indices:
-				record_id = self.list_map.get(index)
+		if userResponse == wx.YES:
+			deletedCount = 0
+			for index in selectedIndices:
+				record_id = self.listMap.get(index)
 				if record_id:
 					if core.delete(record_id):
-						deleted_count += 1
+						deletedCount += 1
 
 			gui.messageBox(
-				_("%d selected records were removed.") % deleted_count,
+				_("%d selected records were removed.") % deletedCount,
 				_("Removal Complete"),
 			)
 
 			# Update the list after removal
-			remaining_duplicates = core.findDuplicateRecords()
-			if remaining_duplicates:
-				self.duplicates = remaining_duplicates
-				self.initialize_duplicate_list()
+			remainingDuplicates = core.findDuplicateRecords()
+			if remainingDuplicates:
+				self.duplicates = remainingDuplicates
+				self.initializeDuplicateList()
 			else:
 				self.Destroy()
 				self.parent._refresh_and_focus()

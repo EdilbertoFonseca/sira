@@ -104,15 +104,15 @@ class MessageForTransport(wx.Dialog):
 
 		# Layout
 		panel = wx.Panel(self)
-		main_sizer = wx.BoxSizer(wx.VERTICAL)
-		view_fields_box = wx.BoxSizer(wx.VERTICAL)
-		view_button_box = wx.BoxSizer(wx.HORIZONTAL)
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		viewFieldsBox = wx.BoxSizer(wx.VERTICAL)
+		viewButtonBox = wx.BoxSizer(wx.HORIZONTAL)
 
 		# Nome do remetente
 		self.labelName = wx.StaticText(panel, label=_("Sender: "))
 		self.textSenderName = wx.TextCtrl(panel, value="", size=(300, -1))
-		view_fields_box.Add(self.labelName, flag=wx.TOP | wx.LEFT, border=5)
-		view_fields_box.Add(
+		viewFieldsBox.Add(self.labelName, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(
 			self.textSenderName,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -121,12 +121,12 @@ class MessageForTransport(wx.Dialog):
 		# Assunto
 		self.labelSubject = wx.StaticText(panel, label=_("Subject: "))
 		self.textSubject = wx.TextCtrl(panel, value="Recado para o transporte", size=(300, -1))
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.textSubject,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
 		)
-		view_fields_box.Add(self.labelSubject, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(self.labelSubject, flag=wx.TOP | wx.LEFT, border=5)
 
 		# Texto do recado
 		self.labelPatient = wx.StaticText(panel, label=_("Patient: "))
@@ -135,8 +135,8 @@ class MessageForTransport(wx.Dialog):
 			style=wx.TE_MULTILINE,
 			size=(300, 150),
 		)
-		view_fields_box.Add(self.labelPatient, flag=wx.TOP | wx.LEFT, border=5)
-		view_fields_box.Add(
+		viewFieldsBox.Add(self.labelPatient, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(
 			self.textPatient,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -145,8 +145,8 @@ class MessageForTransport(wx.Dialog):
 		# Travel date
 		self.labelDate = wx.StaticText(panel, label=_("Travel date: "))
 		self.textDate = MaskedTextCtrl(panel, MASK_DATE, size=(250, -1))
-		view_fields_box.Add(self.labelDate, flag=wx.TOP | wx.LEFT, border=5)
-		view_fields_box.Add(
+		viewFieldsBox.Add(self.labelDate, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(
 			self.textDate,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -155,8 +155,8 @@ class MessageForTransport(wx.Dialog):
 		# Horário da viagem
 		self.labelTime = wx.StaticText(panel, label=_("Time of Travel: "))
 		self.textTime = MaskedTextCtrl(panel, MASK_TIME, size=(250, -1))
-		view_fields_box.Add(self.labelTime, flag=wx.TOP | wx.LEFT, border=5)
-		view_fields_box.Add(
+		viewFieldsBox.Add(self.labelTime, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(
 			self.textTime,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -165,8 +165,8 @@ class MessageForTransport(wx.Dialog):
 		# Cidade de destino
 		self.labelCity = wx.StaticText(panel, label=_("City: "))
 		self.textCity = wx.TextCtrl(panel, -1, size=(250, -1))
-		view_fields_box.Add(self.labelCity, flag=wx.TOP | wx.LEFT, border=5)
-		view_fields_box.Add(
+		viewFieldsBox.Add(self.labelCity, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(
 			self.textCity,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -175,8 +175,8 @@ class MessageForTransport(wx.Dialog):
 		# Ponto de espera
 		self.labelPoint = wx.StaticText(panel, label=_("Point: "))
 		self.textPoint = wx.TextCtrl(panel, size=(250, 25))
-		view_fields_box.Add(self.labelPoint, flag=wx.TOP | wx.LEFT, border=5)
-		view_fields_box.Add(
+		viewFieldsBox.Add(self.labelPoint, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(
 			self.textPoint,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -186,48 +186,48 @@ class MessageForTransport(wx.Dialog):
 		self.labelPhone = wx.StaticText(panel, label=_("Sender's phone: "))
 		self.textPhone = MaskedTextCtrl(panel, MASK_PHONE, size=(300, -1))
 		self.textPhone.Bind(wx.EVT_CHAR_HOOK, self.onPasteAndClean)
-		view_fields_box.Add(self.labelPhone, flag=wx.TOP | wx.LEFT, border=5)
-		view_fields_box.Add(
+		viewFieldsBox.Add(self.labelPhone, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(
 			self.textPhone,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
 		)
 
 		# Botão para Salvar o recado
-		self.save_button = wx.Button(panel, label=_("Save & message"))
-		self.save_button.Bind(wx.EVT_BUTTON, self.OnSave)
-		view_button_box.Add(
-			self.save_button,
+		self.saveButton = wx.Button(panel, label=_("Save & message"))
+		self.saveButton.Bind(wx.EVT_BUTTON, self.OnSave)
+		viewButtonBox.Add(
+			self.saveButton,
 			flag=wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM,
 			border=10,
 		)
 
 		# Botão para limpar os campos
-		self.clean_button = wx.Button(panel, label=_("C&lean"))
-		self.clean_button.Bind(wx.EVT_BUTTON, self.onClean)
-		view_button_box.Add(
-			self.clean_button,
+		self.cleanButton = wx.Button(panel, label=_("C&lean"))
+		self.cleanButton.Bind(wx.EVT_BUTTON, self.onClean)
+		viewButtonBox.Add(
+			self.cleanButton,
 			flag=wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM,
 			border=10,
 		)
 
 		# Botão para cancelar o diálogo
-		self.cancel_button = wx.Button(panel, wx.ID_CANCEL, label=_("&Cancel"))
-		self.cancel_button.Bind(wx.EVT_BUTTON, self.onCancel)
-		view_button_box.Add(
-			self.cancel_button,
+		self.cancelButton = wx.Button(panel, wx.ID_CANCEL, label=_("&Cancel"))
+		self.cancelButton.Bind(wx.EVT_BUTTON, self.onCancel)
+		viewButtonBox.Add(
+			self.cancelButton,
 			flag=wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM,
 			border=10,
 		)
 
-		main_sizer.Add(view_fields_box, flag=wx.EXPAND | wx.ALL, border=10)
-		main_sizer.Add(
-			view_button_box,
+		mainSizer.Add(viewFieldsBox, flag=wx.EXPAND | wx.ALL, border=10)
+		mainSizer.Add(
+			viewButtonBox,
 			flag=wx.ALIGN_CENTER | wx.TOP,
 			border=10,
 		)
 		# Aplicando o sizer principal no painel
-		panel.SetSizerAndFit(main_sizer)
+		panel.SetSizerAndFit(mainSizer)
 
 	def OnSave(self, event):
 		"""
@@ -256,18 +256,18 @@ class MessageForTransport(wx.Dialog):
 		phone = self.textPhone.GetValue()
 
 		# Verifica se os campos obrigatórios estão vazios
-		if self._are_required_fields_empty(name, subject, patient, city):
+		if self._areRequiredFieldsEmpty(name, subject, patient, city):
 			return
 
 		# Formata a mensagem
-		recado = self._format_message(name, patient, date, time, city, point, phone)
+		recado = self._formatMessage(name, patient, date, time, city, point, phone)
 
 		# Gera o caminho e nome do arquivo
-		file_name = self._generate_file_name(subject)
+		fileName = self._generateFileName(subject)
 
 		# Tenta salvar o arquivo
-		if self._save_message_to_file(file_name, recado):
-			self.show_message(
+		if self._saveMessageToFile(fileName, recado):
+			self.showMessage(
 				_("Saved message!"),
 				_(
 					"Success",
@@ -276,7 +276,7 @@ class MessageForTransport(wx.Dialog):
 			)
 			self.onClean(event)
 
-	def _are_required_fields_empty(self, name, subject, patient, city):
+	def _areRequiredFieldsEmpty(self, name, subject, patient, city):
 		"""
 		Verifica se os campos obrigatórios (Nome, Assunto e Mensagem) estão vazios.
 
@@ -309,7 +309,7 @@ class MessageForTransport(wx.Dialog):
 			return True
 		return False
 
-	def _format_message(self, name, patient, date, time, city, point, phone):
+	def _formatMessage(self, name, patient, date, time, city, point, phone):
 		"""
 		Formata a mensagem com os dados coletados.
 
@@ -326,9 +326,12 @@ class MessageForTransport(wx.Dialog):
 				str: A mensagem formatada.
 		"""
 		timestamp = datetime.now().strftime("%H:%M %d/%m/%Y")
-		return f"{name} solicitou o cancelamento da viagem agendada para {patient} marcada para o dia {date} às {time}, com destino à cidade de {city}.\nPonto: {point}\nContato: {phone}\n\nAvisado por {name} às {timestamp}\n"
+		if phone == "(__) _____-____":
+			return f"{name} solicitou o cancelamento da viagem agendada para {patient} marcada para o dia {date} às {time}, com destino à cidade de {city}.\nPonto: {point}\n\nAvisado por {name} às {timestamp}\n"
+		else:
+			return f"{name} solicitou o cancelamento da viagem agendada para {patient} marcada para o dia {date} às {time}, com destino à cidade de {city}.\nPonto: {point}\nContato: {phone}\n\nAvisado por {name} às {timestamp}\n"
 
-	def _generate_file_name(self, subject):
+	def _generateFileName(self, subject):
 		"""
 		Gera o nome do arquivo baseado no assunto e no timestamp atual.
 
@@ -338,14 +341,14 @@ class MessageForTransport(wx.Dialog):
 		Returns:
 				str: Nome do arquivo a ser salvo.
 		"""
-		caminho_documentos = os.path.join(
+		caminhoDocumentos = os.path.join(
 			os.environ["USERPROFILE"],
 			"Documents",
 		)
-		cod_file = datetime.now().strftime("%H-%M %d-%m-%Y")
-		return os.path.join(caminho_documentos, f"{subject} {cod_file}.txt" if subject else "recado.txt")
+		codFile = datetime.now().strftime("%H-%M %d-%m-%Y")
+		return os.path.join(caminhoDocumentos, f"{subject} {codFile}.txt" if subject else "recado.txt")
 
-	def _save_message_to_file(self, file_name, recado):
+	def _saveMessageToFile(self, fileName, recado):
 		"""
 		Salva a mensagem no arquivo de texto.
 
@@ -357,11 +360,11 @@ class MessageForTransport(wx.Dialog):
 				bool: Retorna True se o salvamento for bem-sucedido, False caso contrário.
 		"""
 		try:
-			with open(file_name, "a") as file:
+			with open(fileName, "a") as file:
 				file.write(recado)
 			return True
 		except Exception as e:
-			self.show_message(
+			self.showMessage(
 				_(
 					"Error when saving message: {}".format(
 						str(e),
@@ -383,7 +386,7 @@ class MessageForTransport(wx.Dialog):
 				- Remove o conteúdo de todos os campos de texto listados.
 				- Move o foco para o campo do remetente após a limpeza.
 		"""
-		text_controls = [
+		textControls = [
 			self.textSenderName,
 			self.textSubject,
 			self.textPatient,
@@ -395,13 +398,14 @@ class MessageForTransport(wx.Dialog):
 		]
 
 		# Percorre os campos efetuando a limpeza
-		for ctrl in text_controls:
+		for ctrl in textControls:
 			ctrl.Clear()
 
+		self.textSubject.SetValue("Recado para o transporte")
 		# Foca no campo do remetente
 		self.textSenderName.SetFocus()
 
-	def show_message(self, message, caption=None, style=None):
+	def showMessage(self, message, caption=None, style=None):
 		"""
 		Displays a message to the user in a dialog box.
 

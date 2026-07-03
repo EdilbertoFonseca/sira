@@ -102,15 +102,15 @@ class GeneralMessage(wx.Dialog):
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onInternalDestroy)
 		# Layout
 		panel = wx.Panel(self)
-		main_sizer = wx.BoxSizer(wx.VERTICAL)
-		view_fields_box = wx.BoxSizer(wx.VERTICAL)
-		view_button_box = wx.BoxSizer(wx.HORIZONTAL)
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		viewFieldsBox = wx.BoxSizer(wx.VERTICAL)
+		viewButtonBox = wx.BoxSizer(wx.HORIZONTAL)
 
 		# Nome do remetente
 		self.labelName = wx.StaticText(panel, label=_("Sender: "))
 		self.textSenderName = wx.TextCtrl(panel, value="", size=(300, -1))
-		view_fields_box.Add(self.labelName, flag=wx.TOP | wx.LEFT, border=5)
-		view_fields_box.Add(
+		viewFieldsBox.Add(self.labelName, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(
 			self.textSenderName,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -119,12 +119,12 @@ class GeneralMessage(wx.Dialog):
 		# Assunto
 		self.labelSubject = wx.StaticText(panel, label=_("Subject: "))
 		self.textSubject = wx.TextCtrl(panel, value="", size=(300, -1))
-		view_fields_box.Add(
+		viewFieldsBox.Add(
 			self.textSubject,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
 		)
-		view_fields_box.Add(self.labelSubject, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(self.labelSubject, flag=wx.TOP | wx.LEFT, border=5)
 
 		# Texto do recado
 		self.labelMessage = wx.StaticText(panel, label=_("Message Text: "))
@@ -133,8 +133,8 @@ class GeneralMessage(wx.Dialog):
 			style=wx.TE_MULTILINE,
 			size=(300, 150),
 		)
-		view_fields_box.Add(self.labelMessage, flag=wx.TOP | wx.LEFT, border=5)
-		view_fields_box.Add(
+		viewFieldsBox.Add(self.labelMessage, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(
 			self.textMessage,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
@@ -144,48 +144,48 @@ class GeneralMessage(wx.Dialog):
 		self.labelPhone = wx.StaticText(panel, label=_("Sender's phone: "))
 		self.textPhone = MaskedTextCtrl(panel, MASK_PHONE, size=(300, -1))
 		self.textPhone.Bind(wx.EVT_CHAR_HOOK, self.onPasteAndClean)
-		view_fields_box.Add(self.labelPhone, flag=wx.TOP | wx.LEFT, border=5)
-		view_fields_box.Add(
+		viewFieldsBox.Add(self.labelPhone, flag=wx.TOP | wx.LEFT, border=5)
+		viewFieldsBox.Add(
 			self.textPhone,
 			flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
 			border=5,
 		)
 
 		# Botão para Salvar o recado
-		self.save_button = wx.Button(panel, label=_("Save & message"))
-		self.save_button.Bind(wx.EVT_BUTTON, self.OnSave)
-		view_button_box.Add(
-			self.save_button,
+		self.saveButton = wx.Button(panel, label=_("Save & message"))
+		self.saveButton.Bind(wx.EVT_BUTTON, self.OnSave)
+		viewButtonBox.Add(
+			self.saveButton,
 			flag=wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM,
 			border=10,
 		)
 
 		# Botão para limpar os campos
-		self.clean_button = wx.Button(panel, label=_("C&lean"))
-		self.clean_button.Bind(wx.EVT_BUTTON, self.onClean)
-		view_button_box.Add(
-			self.clean_button,
+		self.cleanButton = wx.Button(panel, label=_("C&lean"))
+		self.cleanButton.Bind(wx.EVT_BUTTON, self.onClean)
+		viewButtonBox.Add(
+			self.cleanButton,
 			flag=wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM,
 			border=10,
 		)
 
 		# Botão para cancelar o diálogo
-		self.cancel_button = wx.Button(panel, wx.ID_CANCEL, label=_("&Cancel"))
-		self.cancel_button.Bind(wx.EVT_BUTTON, self.onCancel)
-		view_button_box.Add(
-			self.cancel_button,
+		self.cancelButton = wx.Button(panel, wx.ID_CANCEL, label=_("&Cancel"))
+		self.cancelButton.Bind(wx.EVT_BUTTON, self.onCancel)
+		viewButtonBox.Add(
+			self.cancelButton,
 			flag=wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM,
 			border=10,
 		)
 
-		main_sizer.Add(view_fields_box, flag=wx.EXPAND | wx.ALL, border=10)
-		main_sizer.Add(
-			view_button_box,
+		mainSizer.Add(viewFieldsBox, flag=wx.EXPAND | wx.ALL, border=10)
+		mainSizer.Add(
+			viewButtonBox,
 			flag=wx.ALIGN_CENTER | wx.TOP,
 			border=10,
 		)
 		# Aplicando o sizer principal no painel
-		panel.SetSizerAndFit(main_sizer)
+		panel.SetSizerAndFit(mainSizer)
 
 	def OnSave(self, event):
 		"""
@@ -210,18 +210,18 @@ class GeneralMessage(wx.Dialog):
 		phone = self.textPhone.GetValue()
 
 		# Verifica se os campos obrigatórios estão vazios
-		if self._are_required_fields_empty(name, subject, message):
+		if self._areRequiredFieldsEmpty(name, subject, message):
 			return
 
 		# Formata a mensagem
-		recado = self._format_message(name, message, phone)
+		recado = self._formatMessage(name, message, phone)
 
 		# Gera o caminho e nome do arquivo
-		file_name = self._generate_file_name(subject)
+		fileName = self._generateFileName(subject)
 
 		# Tenta salvar o arquivo
-		if self._save_message_to_file(file_name, recado):
-			self.show_message(
+		if self._saveMessageToFile(fileName, recado):
+			self.showMessage(
 				_("Saved message!"),
 				_(
 					"Success",
@@ -230,7 +230,7 @@ class GeneralMessage(wx.Dialog):
 			)
 			self.onClean(event)
 
-	def _are_required_fields_empty(self, name, subject, message):
+	def _areRequiredFieldsEmpty(self, name, subject, message):
 		"""
 		Verifica se os campos obrigatórios (Nome, Assunto e Mensagem) estão vazios.
 
@@ -261,7 +261,7 @@ class GeneralMessage(wx.Dialog):
 			return True
 		return False
 
-	def _format_message(self, name, message, phone):
+	def _formatMessage(self, name, message, phone):
 		"""
 		Formata a mensagem com os dados coletados.
 
@@ -274,9 +274,14 @@ class GeneralMessage(wx.Dialog):
 				str: A mensagem formatada.
 		"""
 		timestamp = datetime.now().strftime("%H:%M %d/%m/%Y")
-		return f"{message}.\nContato: {phone}\n\nAvisado por {name} às {timestamp}\n"
+		if phone == "(__) _____-____":
+			return f"{message}.\n\nAvisado por {name} às {timestamp}\n"
+		else:
+			return f"{message}.\nContato: {phone}\n\nAvisado por {name} às {timestamp}\n"
 
-	def _generate_file_name(self, subject):
+
+
+	def _generateFileName(self, subject):
 		"""
 		Gera o nome do arquivo baseado no assunto e no timestamp atual.
 
@@ -286,14 +291,14 @@ class GeneralMessage(wx.Dialog):
 		Returns:
 				str: Nome do arquivo a ser salvo.
 		"""
-		caminho_documentos = os.path.join(
+		caminhoDocumentos = os.path.join(
 			os.environ["USERPROFILE"],
 			"Documents",
 		)
-		cod_file = datetime.now().strftime("%H-%M %d-%m-%Y")
-		return os.path.join(caminho_documentos, f"{subject} {cod_file}.txt" if subject else "recado.txt")
+		codFile = datetime.now().strftime("%H-%M %d-%m-%Y")
+		return os.path.join(caminhoDocumentos, f"{subject} {codFile}.txt" if subject else "recado.txt")
 
-	def _save_message_to_file(self, file_name, recado):
+	def _saveMessageToFile(self, fileName, recado):
 		"""
 		Salva a mensagem no arquivo de texto.
 
@@ -305,11 +310,11 @@ class GeneralMessage(wx.Dialog):
 				bool: Retorna True se o salvamento for bem-sucedido, False caso contrário.
 		"""
 		try:
-			with open(file_name, "a") as file:
+			with open(fileName, "a") as file:
 				file.write(recado)
 			return True
 		except Exception as e:
-			self.show_message(
+			self.showMessage(
 				_(
 					"Error when saving message: {}".format(
 						str(e),
@@ -331,7 +336,7 @@ class GeneralMessage(wx.Dialog):
 				- Remove o conteúdo de todos os campos de texto listados.
 				- Move o foco para o campo do remetente após a limpeza.
 		"""
-		text_controls = [
+		textControls = [
 			self.textSenderName,
 			self.textSubject,
 			self.textMessage,
@@ -339,13 +344,13 @@ class GeneralMessage(wx.Dialog):
 		]
 
 		# Percorre os campos efetuando a limpeza
-		for ctrl in text_controls:
+		for ctrl in textControls:
 			ctrl.Clear()
 
 		# Foca no campo do remetente
 		self.textSenderName.SetFocus()
 
-	def show_message(self, message, caption=None, style=wx.OK | wx.ICON_INFORMATION):
+	def showMessage(self, message, caption=None, style=wx.OK | wx.ICON_INFORMATION):
 		"""
 		Displays a message to the user in a dialog box.
 
